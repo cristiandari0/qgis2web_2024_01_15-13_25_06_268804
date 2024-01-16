@@ -1,0 +1,4032 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/MarkerCluster.css">
+        <link rel="stylesheet" href="css/MarkerCluster.Default.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet-svg-shape-markers.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="data/CircuitosElectoralesCapital_1.js"></script>
+        <script src="data/LISTADOCESPED181CUECON118CUI_2.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:13
+        }).fitBounds([[-26.92360181238822,-65.33550221966259],[-26.752365288969678,-65.08028467913438]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_GoogleHibrid_0');
+        map.getPane('pane_GoogleHibrid_0').style.zIndex = 400;
+        var layer_GoogleHibrid_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleHibrid_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 13,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_GoogleHibrid_0;
+        map.addLayer(layer_GoogleHibrid_0);
+        function pop_CircuitosElectoralesCapital_1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">gid</th>\
+                        <td>' + (feature.properties['gid'] !== null ? autolinker.link(feature.properties['gid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">distrito</th>\
+                        <td>' + (feature.properties['distrito'] !== null ? autolinker.link(feature.properties['distrito'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">provincia</th>\
+                        <td>' + (feature.properties['provincia'] !== null ? autolinker.link(feature.properties['provincia'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">departamen</th>\
+                        <td>' + (feature.properties['departamen'] !== null ? autolinker.link(feature.properties['departamen'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">cabecera</th>\
+                        <td>' + (feature.properties['cabecera'] !== null ? autolinker.link(feature.properties['cabecera'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">circuito</th>\
+                        <td>' + (feature.properties['circuito'] !== null ? autolinker.link(feature.properties['circuito'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">indec_p</th>\
+                        <td>' + (feature.properties['indec_p'] !== null ? autolinker.link(feature.properties['indec_p'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">indec_d</th>\
+                        <td>' + (feature.properties['indec_d'] !== null ? autolinker.link(feature.properties['indec_d'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_CircuitosElectoralesCapital_1_0(feature) {
+            switch(String(feature.properties['circuito'])) {
+                case '0001':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(184,74,239,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0001A':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(239,220,99,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0002':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(71,170,232,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0002A':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(232,232,44,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0003':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(123,113,232,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0004':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(76,206,193,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0005':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(66,227,74,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0006':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(41,69,209,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0007':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(63,210,46,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0007A':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(120,237,155,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0008':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(146,206,61,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0008A':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(14,217,153,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0009':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(222,170,103,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0009A':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(61,61,237,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0010':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(173,239,29,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0010A':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(60,231,163,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0011':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(207,44,55,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0011A':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(79,210,230,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0012':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(80,165,201,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0012A':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(122,32,211,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0013':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(22,200,194,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0013A':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(239,117,235,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0014':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(236,195,14,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0014A':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(223,133,136,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0014B':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(226,39,117,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0014C':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(164,126,240,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0014D':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(90,206,117,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0015':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(124,80,218,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0015A':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(211,44,147,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0015B':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(186,58,240,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0016':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(65,37,224,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0016A':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(15,96,216,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0017':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(231,79,44,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0017A':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(51,115,234,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0018':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(108,106,239,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0018A':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(217,30,24,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0018B':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(45,228,17,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0018C':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(122,159,220,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0018D':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(76,201,42,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0018E':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(234,125,156,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0018F':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(182,40,214,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0018G':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(138,23,205,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0019':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(113,156,211,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0019A':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(157,228,15,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0020':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(111,41,203,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0021':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(228,170,113,0.555)',
+                interactive: true,
+            }
+                    break;
+                case '0022':
+                    return {
+                pane: 'pane_CircuitosElectoralesCapital_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.555)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(188,213,124,0.555)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_CircuitosElectoralesCapital_1');
+        map.getPane('pane_CircuitosElectoralesCapital_1').style.zIndex = 401;
+        map.getPane('pane_CircuitosElectoralesCapital_1').style['mix-blend-mode'] = 'multiply';
+        var layer_CircuitosElectoralesCapital_1 = new L.geoJson(json_CircuitosElectoralesCapital_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_CircuitosElectoralesCapital_1',
+            layerName: 'layer_CircuitosElectoralesCapital_1',
+            pane: 'pane_CircuitosElectoralesCapital_1',
+            onEachFeature: pop_CircuitosElectoralesCapital_1,
+            style: style_CircuitosElectoralesCapital_1_0,
+        });
+        bounds_group.addLayer(layer_CircuitosElectoralesCapital_1);
+        map.addLayer(layer_CircuitosElectoralesCapital_1);
+        function pop_LISTADOCESPED181CUECON118CUI_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">CUI</th>\
+                        <td>' + (feature.properties['CUI'] !== null ? autolinker.link(feature.properties['CUI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CUE/ANEXO</th>\
+                        <td>' + (feature.properties['CUE/ANEXO'] !== null ? autolinker.link(feature.properties['CUE/ANEXO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ESTABLECIMIENTO</th>\
+                        <td>' + (feature.properties['ESTABLECIMIENTO'] !== null ? autolinker.link(feature.properties['ESTABLECIMIENTO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DOMICILIO</th>\
+                        <td>' + (feature.properties['DOMICILIO'] !== null ? autolinker.link(feature.properties['DOMICILIO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DEPARTAMENTO</th>\
+                        <td>' + (feature.properties['DEPARTAMENTO'] !== null ? autolinker.link(feature.properties['DEPARTAMENTO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LOCALIDAD</th>\
+                        <td>' + (feature.properties['LOCALIDAD'] !== null ? autolinker.link(feature.properties['LOCALIDAD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TELEFONO</th>\
+                        <td>' + (feature.properties['TELEFONO'] !== null ? autolinker.link(feature.properties['TELEFONO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DIRECTOR</th>\
+                        <td>' + (feature.properties['DIRECTOR'] !== null ? autolinker.link(feature.properties['DIRECTOR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">7.1.SUPERFICIES VERDES</th>\
+                        <td>' + (feature.properties['7.1.SUPERFICIES VERDES'] !== null ? autolinker.link(feature.properties['7.1.SUPERFICIES VERDES'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">7.2.SUPERFICIE-MTS2</th>\
+                        <td>' + (feature.properties['7.2.SUPERFICIE-MTS2'] !== null ? autolinker.link(feature.properties['7.2.SUPERFICIE-MTS2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">7.3.NECESITA CORTE</th>\
+                        <td>' + (feature.properties['7.3.NECESITA CORTE'] !== null ? autolinker.link(feature.properties['7.3.NECESITA CORTE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">7.3.RECIBE COLABORACION</th>\
+                        <td>' + (feature.properties['7.3.RECIBE COLABORACION'] !== null ? autolinker.link(feature.properties['7.3.RECIBE COLABORACION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LONG</th>\
+                        <td>' + (feature.properties['LONG'] !== null ? autolinker.link(feature.properties['LONG'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LAT</th>\
+                        <td>' + (feature.properties['LAT'] !== null ? autolinker.link(feature.properties['LAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_LISTADOCESPED181CUECON118CUI_2_0(feature) {
+            switch(String(feature.properties['ESTABLECIMIENTO'])) {
+                case 'ALBERGUE ESCOLAR TINKU HUASI':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'C.D.I.C.  LOS ANGELES DE MARIA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'C.E.J.A. DR. ALEJANDRO HEREDIA II':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'C.E.J.A. DR. BENJAMIN ARAOZ':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'C.E.J.A. MOSCONI':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'C.E.J.A. PRACTICAS DEL HOGAR  VILLA URQUIZA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'C.E.J.A. ROGELIO GUZMAN':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'C.I.I.D.E.P.T.':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'CEJA ADULTOS N� 1':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'CEJA ADULTOS N� 2':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'CEJA GABRIELA MISTRAL':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'CEJA VIRGEN DE LA MERCED':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'CENTRO DE ABORDAJE INTEGRAL PARA LOS ALUMNOS CON TEA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'CENTRO DE EDUCACION FISICA N� 18':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'CENTRO DE FORMACION PROFESIONAL N� 1 - TUCUMAN':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'COLEGIO NACIONAL " GRAL. BARTOLOME MITRE"':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'CONSERVATORIO PROVINCIAL DE MUSICA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC DE NIVEL INICIAL DR MIGUEL LILLO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. ALBERTO GARCIA HAMILTON':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. AMADO NICOMEDES JURI':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. BERNABE ARAOZ':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. CAPITAN DE LOS ANDES':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. CIUDADELA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. COSTANERA NORTE':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE ADMINISTRACION':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE CAPACITACION TECNICA DR. BENJAMIN F. ARAOZ':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE COMERCIO N� 1 GRAL. MANUEL BELGRANO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE COMERCIO N� 2 PROFESOR EMILIO FRANCISCO  BARBIERI':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE COMERCIO N� 4 BATALLA DE TUCUMAN':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE COMERCIO PTE. URQUIZA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE F. P. NOCTURNA GABRIELA MISTRAL':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE FORM. PROF. VILLA 9 DE JULIO N� 2':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE FORMACION PROFESIONAL VILLA 9 DE JULIO N� 1':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE LA  PATRIA - COMERCIO N� 3  ':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE LA PATRIA DR. MANUEL BELGRANO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INCIAL LUCAS A. CORDOBA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL BARRIO NESTOR KIRCHNER':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL BERNABE ARAOZ':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL DEAN GREGORIO FUNES':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL DELFIN JIJENA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL DR. AGUSTIN JUSTO DE LA VEGA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL DR. MARCOS PAZ':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL DR. RICARDO GUTIERREZ':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL DR. SALUSTIANO ZAVALIA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL GOBERNADOR MIGUEL CRITTO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL GUILLERMO GRIET':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL INDEPENDENCIA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL JOSE MARMOL':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL JUSTINIANO FRIAS':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL MARTIN MIGUEL DE GUEMES':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL MONSE�OR BLAS VICTORIO CONRERO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL MUTUAL POLICIAL':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL NTRA. SRA. DEL ROSARIO DE NVA. POMPEYA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL NUEVA BARRIO CRUCERO GENERAL BELGRANO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL N� 240 M. LAINEZ':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL N� 247 "DR. PANTALEON FERNANDEZ"':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL N� 249  MARCO AVELLANEDA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL N� 252 MANUEL A. Y PINEDO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL N� 252 MANUEL ARROYO Y PINEDO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL N� 253 - ESTADO DE ISRAEL':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL N� 372 - CAMPO DE LAS CARRERAS':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL N� 49 JUAN B. ALBERDI':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL PATRICIAS ARGENTINAS':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL PROFESOR ALFREDO COSSON':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL RECTOR BENJAMIN VILLAFA�E':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL TENIENTE BENJAMIN MATIENZO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL VILLA ALEM ':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE NIVEL INICIAL ZENON SANTILLAN':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DE OFICIOS GRAL. BELGRANO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DEAN GREGORIO FUNES':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DELFIN JIJENA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DOCTOR MARCOS PAZ':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DR. AGUSTIN JUSTO DE LA VEGA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DR. BERNARDO DE MONTEAGUDO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DR. MIGUEL LILLO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DR. RAM�N ADRIAN ARAUJO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DR. RAUL COLOMBRES':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DR. RICARDO GUTIERREZ':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. DR. SALUSTIANO ZAVALIA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. EJERCITO ARGENTINO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. ELMINA PAZ DE GALLO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. ESP. A.L.P.I. (INT. SEC. JOVENES Y ADULTOS CON DISC.)':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. ESP. MAGDALENA LAGARRIGUE (INT. SEC. JOV. Y ADULT. CON ':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. ESPECIAL - ELSA RUGGERI DE FABIO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. ESPECIAL ALPI':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. ESPECIAL DE SORDOS PROSPERO GARCIA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. ESPECIAL LUIS BRAILLE':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. ESPECIAL N� 395 - ELSA RUGGERI DE FABIO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. GOBERNADOR MIGUEL CRITTO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. GUILLERMO GRIET':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. INFANTIL ALBERTO GARCIA HAMILTON':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. INFANTIL PROF. SOLEDAD ARDILES GRAY DE STEIN':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. JUSTINIANO FRIAS':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. LOLA MORA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. LUCAS ALEJANDRO CORDOBA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. MADRE DE LA PATRIA - MARIA REMEDIOS DEL VALLE':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. MARTIN MIGUEL DE GUEMES':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. MEDIA PRESIDENTE JUAN DOMINGO PERON':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. MEDIA VIRGEN DE LA MERCED':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. MONSE�OR BLAS VICTORIO CONRERO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. MUTUAL POLICIAL':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. NOCTURNA CIUDADELA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. NOCTURNA DR. ALEJANDRO HEREDIA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. NOCTURNA JOSE MARTI':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. NOCTURNA SILVANO BORES':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. NUESTRA SRA. DEL ROSARIO DE NUEVA POMPEYA-(EX. ESC. DEL':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. NUEVA BARRIO CRUCERO BELGRANO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. NUEVA ESPERANZA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. N� 161 - ISABEL LA CATOLICA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. N� 240 - MANUEL LAINEZ':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. N� 247 - DR. PANTALEON FERNANDEZ':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. N� 248 - JUAN LUIS NOUGUES':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. N� 249 - MARCO AVELLANEDA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. N� 253 "ESTADO DE ISRAEL"':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. N� 259 - GENERAL MANUEL BELGRANO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. N� 301 - CAPITAL FEDERAL':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. N� 372 - CAMPO DE LAS CARRERAS':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. N� 49 - JUAN BAUTISTA ALBERDI':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. PARA LA VIDA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. PATRICIAS ARGENTINAS':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. PAUL GROUSSAC':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. PERIODISMO ARGENTINO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. PRESIDENTE NICOLAS AVELLANEDA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. PRIMARIA MANANTIALES SUR':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. PROFESOR ALFREDO COSSON':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. PTE. JULIO ARGENTINO ROCA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. RECTOR BENJAMIN VILLAFA�E':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. REPUBLICA DEL PARAGUAY':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. SEC. RAUL SCALABRINI ORTIZ':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. SECUNDARIA AMADO NICOMEDES JURI':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. SECUNDARIA BENJAMIN MATIENZO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. SECUNDARIA BERNABE ARAOZ':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. SECUNDARIA BLAS PARERA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. SECUNDARIA B� SAN MIGUEL':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. SECUNDARIA B� SUTIAGA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. SECUNDARIA CAPITAN DE LOS ANDES':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. SECUNDARIA COSTANERA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. SECUNDARIA CRUCERO BELGRANO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. SECUNDARIA DE COMERCIO ILDEFONSO DE LAS MU�ECAS':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. SECUNDARIA DE VILLA AMALIA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. SECUNDARIA DR. RAM�N ADRIAN ARAUJO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. SECUNDARIA EL SALVADOR':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. SECUNDARIA JUAN LUIS NOUGUES ':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. SECUNDARIA MAESTRO ARANCIBIA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. SECUNDARIA MARINA ALFARO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. SECUNDARIA MARTIN MIGUEL DE GUEMES':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. SECUNDARIA PANTALEON FERNANDEZ':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. SECUNDARIA RICARDO GUTIERREZ':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. SILVANO BORES':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. SOBERANIA NACIONAL':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. SU SANTIDAD JUAN PABLO II':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. SUPERIOR DE EDUCACION ARTISTICA (E.S.E.A.)':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. TECNICA JUAN XXIII':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. TECNICA N� 3 DR. JUAN B. TERAN':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. TECNICA N� 5':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. TENIENTE BENJAMIN MATIENZO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC. ZENON JOSE SANTILLAN':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC.DE NIVEL INICIAL PARA LA VIDA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC.SECUNDARIA B� VICTORIA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC.SECUNDARIA CAMPO DE LAS CARRERAS':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC.SECUNDARIA EMILIO CASTELAR':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESC.SECUNDARIA RURAL MEDIADA POR TIC -SEDE CENTRAL':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESCUELA DE NIVEL INICIAL COSTANERA NORTE':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESCUELA DE TODOS':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESCUELA ESPECIAL MAGDALENA LAGARRIGUE':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESCUELA MEDIA B� SAN ALBERTO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESCUELA MEDIA DEL BARRIO LOLA MORA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESCUELA NUEVA BARRIO SAN MIGUEL':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESCUELA SEC. BARRIO SAN RAMON':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESCUELA SECUNDARIA CAMPO NORTE':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESCUELA SECUNDARIA CONGRESO DE TUCUMAN':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESCUELA SECUNDARIA DE LA CIUDADELA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESCUELA SECUNDARIA DR. LEANDRO N. ALEM':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESCUELA SECUNDARIA JUAN LARREA':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'ESCUELA SECUNDARIA MANUEL ARROYO Y PINEDO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'I.E.S. DR. MIGUEL CAMPERO':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'INST. DE ENSE�ANZA SUPERIOR PROF. MANUEL MARCHETTI':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'INSTITUTO SUPERIOR DE EDUCACION TECNOLOGICA (I.S.E.T.)':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                case 'LICEO REMEDIOS DE ESCALADA DE SAN MARTIN':
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+                shape: 'triangle',
+                radius: 7.6,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,241,250,0.9)',
+                interactive: false,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_LISTADOCESPED181CUECON118CUI_2');
+        map.getPane('pane_LISTADOCESPED181CUECON118CUI_2').style.zIndex = 402;
+        map.getPane('pane_LISTADOCESPED181CUECON118CUI_2').style['mix-blend-mode'] = 'normal';
+        var layer_LISTADOCESPED181CUECON118CUI_2 = new L.geoJson(json_LISTADOCESPED181CUECON118CUI_2, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_LISTADOCESPED181CUECON118CUI_2',
+            layerName: 'layer_LISTADOCESPED181CUECON118CUI_2',
+            pane: 'pane_LISTADOCESPED181CUECON118CUI_2',
+            onEachFeature: pop_LISTADOCESPED181CUECON118CUI_2,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_LISTADOCESPED181CUECON118CUI_2_0(feature));
+            },
+        });
+        var cluster_LISTADOCESPED181CUECON118CUI_2 = new L.MarkerClusterGroup({showCoverageOnHover: false,
+            spiderfyDistanceMultiplier: 2});
+        cluster_LISTADOCESPED181CUECON118CUI_2.addLayer(layer_LISTADOCESPED181CUECON118CUI_2);
+
+        bounds_group.addLayer(layer_LISTADOCESPED181CUECON118CUI_2);
+        cluster_LISTADOCESPED181CUECON118CUI_2.addTo(map);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'LISTADO CESPED 181 CUE CON 118 CUI<br /><table><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ALBERGUEESCOLARTINKUHUASI0.png" /></td><td>ALBERGUE ESCOLAR TINKU HUASI</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_CDICLOSANGELESDEMARIA1.png" /></td><td>C.D.I.C.  LOS ANGELES DE MARIA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_CEJADRALEJANDROHEREDIAII2.png" /></td><td>C.E.J.A. DR. ALEJANDRO HEREDIA II</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_CEJADRBENJAMINARAOZ3.png" /></td><td>C.E.J.A. DR. BENJAMIN ARAOZ</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_CEJAMOSCONI4.png" /></td><td>C.E.J.A. MOSCONI</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_CEJAPRACTICASDELHOGARVILLAURQUIZA5.png" /></td><td>C.E.J.A. PRACTICAS DEL HOGAR  VILLA URQUIZA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_CEJAROGELIOGUZMAN6.png" /></td><td>C.E.J.A. ROGELIO GUZMAN</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_CIIDEPT7.png" /></td><td>C.I.I.D.E.P.T.</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_CEJAADULTOSN18.png" /></td><td>CEJA ADULTOS N� 1</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_CEJAADULTOSN29.png" /></td><td>CEJA ADULTOS N� 2</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_CEJAGABRIELAMISTRAL10.png" /></td><td>CEJA GABRIELA MISTRAL</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_CEJAVIRGENDELAMERCED11.png" /></td><td>CEJA VIRGEN DE LA MERCED</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_CENTRODEABORDAJEINTEGRALPARALOSALUMNOSCONTEA12.png" /></td><td>CENTRO DE ABORDAJE INTEGRAL PARA LOS ALUMNOS CON TEA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_CENTRODEEDUCACIONFISICAN1813.png" /></td><td>CENTRO DE EDUCACION FISICA N� 18</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_CENTRODEFORMACIONPROFESIONALN1TUCUMAN14.png" /></td><td>CENTRO DE FORMACION PROFESIONAL N� 1 - TUCUMAN</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_COLEGIONACIONALGRALBARTOLOMEMITRE15.png" /></td><td>COLEGIO NACIONAL " GRAL. BARTOLOME MITRE"</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_CONSERVATORIOPROVINCIALDEMUSICA16.png" /></td><td>CONSERVATORIO PROVINCIAL DE MUSICA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALDRMIGUELLILLO17.png" /></td><td>ESC DE NIVEL INICIAL DR MIGUEL LILLO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCALBERTOGARCIAHAMILTON18.png" /></td><td>ESC. ALBERTO GARCIA HAMILTON</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCAMADONICOMEDESJURI19.png" /></td><td>ESC. AMADO NICOMEDES JURI</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCBERNABEARAOZ20.png" /></td><td>ESC. BERNABE ARAOZ</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCCAPITANDELOSANDES21.png" /></td><td>ESC. CAPITAN DE LOS ANDES</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCCIUDADELA22.png" /></td><td>ESC. CIUDADELA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCCOSTANERANORTE23.png" /></td><td>ESC. COSTANERA NORTE</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDEADMINISTRACION24.png" /></td><td>ESC. DE ADMINISTRACION</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDECAPACITACIONTECNICADRBENJAMINFARAOZ25.png" /></td><td>ESC. DE CAPACITACION TECNICA DR. BENJAMIN F. ARAOZ</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDECOMERCION1GRALMANUELBELGRANO26.png" /></td><td>ESC. DE COMERCIO N� 1 GRAL. MANUEL BELGRANO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDECOMERCION2PROFESOREMILIOFRANCISCOBARBIERI27.png" /></td><td>ESC. DE COMERCIO N� 2 PROFESOR EMILIO FRANCISCO  BARBIERI</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDECOMERCION4BATALLADETUCUMAN28.png" /></td><td>ESC. DE COMERCIO N� 4 BATALLA DE TUCUMAN</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDECOMERCIOPTEURQUIZA29.png" /></td><td>ESC. DE COMERCIO PTE. URQUIZA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDEFPNOCTURNAGABRIELAMISTRAL30.png" /></td><td>ESC. DE F. P. NOCTURNA GABRIELA MISTRAL</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDEFORMPROFVILLA9DEJULION231.png" /></td><td>ESC. DE FORM. PROF. VILLA 9 DE JULIO N� 2</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDEFORMACIONPROFESIONALVILLA9DEJULION132.png" /></td><td>ESC. DE FORMACION PROFESIONAL VILLA 9 DE JULIO N� 1</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDELAPATRIACOMERCION333.png" /></td><td>ESC. DE LA  PATRIA - COMERCIO N� 3  </td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDELAPATRIADRMANUELBELGRANO34.png" /></td><td>ESC. DE LA PATRIA DR. MANUEL BELGRANO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINCIALLUCASACORDOBA35.png" /></td><td>ESC. DE NIVEL INCIAL LUCAS A. CORDOBA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALBARRIONESTORKIRCHNER36.png" /></td><td>ESC. DE NIVEL INICIAL BARRIO NESTOR KIRCHNER</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALBERNABEARAOZ37.png" /></td><td>ESC. DE NIVEL INICIAL BERNABE ARAOZ</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALDEANGREGORIOFUNES38.png" /></td><td>ESC. DE NIVEL INICIAL DEAN GREGORIO FUNES</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALDELFINJIJENA39.png" /></td><td>ESC. DE NIVEL INICIAL DELFIN JIJENA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALDRAGUSTINJUSTODELAVEGA40.png" /></td><td>ESC. DE NIVEL INICIAL DR. AGUSTIN JUSTO DE LA VEGA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALDRMARCOSPAZ41.png" /></td><td>ESC. DE NIVEL INICIAL DR. MARCOS PAZ</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALDRRICARDOGUTIERREZ42.png" /></td><td>ESC. DE NIVEL INICIAL DR. RICARDO GUTIERREZ</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALDRSALUSTIANOZAVALIA43.png" /></td><td>ESC. DE NIVEL INICIAL DR. SALUSTIANO ZAVALIA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALGOBERNADORMIGUELCRITTO44.png" /></td><td>ESC. DE NIVEL INICIAL GOBERNADOR MIGUEL CRITTO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALGUILLERMOGRIET45.png" /></td><td>ESC. DE NIVEL INICIAL GUILLERMO GRIET</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALINDEPENDENCIA46.png" /></td><td>ESC. DE NIVEL INICIAL INDEPENDENCIA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALJOSEMARMOL47.png" /></td><td>ESC. DE NIVEL INICIAL JOSE MARMOL</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALJUSTINIANOFRIAS48.png" /></td><td>ESC. DE NIVEL INICIAL JUSTINIANO FRIAS</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALMARTINMIGUELDEGUEMES49.png" /></td><td>ESC. DE NIVEL INICIAL MARTIN MIGUEL DE GUEMES</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALMONSEORBLASVICTORIOCONRERO50.png" /></td><td>ESC. DE NIVEL INICIAL MONSE�OR BLAS VICTORIO CONRERO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALMUTUALPOLICIAL51.png" /></td><td>ESC. DE NIVEL INICIAL MUTUAL POLICIAL</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALNTRASRADELROSARIODENVAPOMPEYA52.png" /></td><td>ESC. DE NIVEL INICIAL NTRA. SRA. DEL ROSARIO DE NVA. POMPEYA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALNUEVABARRIOCRUCEROGENERALBELGRANO53.png" /></td><td>ESC. DE NIVEL INICIAL NUEVA BARRIO CRUCERO GENERAL BELGRANO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALN240MLAINEZ54.png" /></td><td>ESC. DE NIVEL INICIAL N� 240 M. LAINEZ</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALN247DRPANTALEONFERNANDEZ55.png" /></td><td>ESC. DE NIVEL INICIAL N� 247 "DR. PANTALEON FERNANDEZ"</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALN249MARCOAVELLANEDA56.png" /></td><td>ESC. DE NIVEL INICIAL N� 249  MARCO AVELLANEDA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALN252MANUELAYPINEDO57.png" /></td><td>ESC. DE NIVEL INICIAL N� 252 MANUEL A. Y PINEDO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALN252MANUELARROYOYPINEDO58.png" /></td><td>ESC. DE NIVEL INICIAL N� 252 MANUEL ARROYO Y PINEDO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALN253ESTADODEISRAEL59.png" /></td><td>ESC. DE NIVEL INICIAL N� 253 - ESTADO DE ISRAEL</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALN372CAMPODELASCARRERAS60.png" /></td><td>ESC. DE NIVEL INICIAL N� 372 - CAMPO DE LAS CARRERAS</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALN49JUANBALBERDI61.png" /></td><td>ESC. DE NIVEL INICIAL N� 49 JUAN B. ALBERDI</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALPATRICIASARGENTINAS62.png" /></td><td>ESC. DE NIVEL INICIAL PATRICIAS ARGENTINAS</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALPROFESORALFREDOCOSSON63.png" /></td><td>ESC. DE NIVEL INICIAL PROFESOR ALFREDO COSSON</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALRECTORBENJAMINVILLAFAE64.png" /></td><td>ESC. DE NIVEL INICIAL RECTOR BENJAMIN VILLAFA�E</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALTENIENTEBENJAMINMATIENZO65.png" /></td><td>ESC. DE NIVEL INICIAL TENIENTE BENJAMIN MATIENZO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALVILLAALEM66.png" /></td><td>ESC. DE NIVEL INICIAL VILLA ALEM </td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALZENONSANTILLAN67.png" /></td><td>ESC. DE NIVEL INICIAL ZENON SANTILLAN</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDEOFICIOSGRALBELGRANO68.png" /></td><td>ESC. DE OFICIOS GRAL. BELGRANO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDEANGREGORIOFUNES69.png" /></td><td>ESC. DEAN GREGORIO FUNES</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDELFINJIJENA70.png" /></td><td>ESC. DELFIN JIJENA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDOCTORMARCOSPAZ71.png" /></td><td>ESC. DOCTOR MARCOS PAZ</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDRAGUSTINJUSTODELAVEGA72.png" /></td><td>ESC. DR. AGUSTIN JUSTO DE LA VEGA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDRBERNARDODEMONTEAGUDO73.png" /></td><td>ESC. DR. BERNARDO DE MONTEAGUDO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDRMIGUELLILLO74.png" /></td><td>ESC. DR. MIGUEL LILLO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDRRAMNADRIANARAUJO75.png" /></td><td>ESC. DR. RAM�N ADRIAN ARAUJO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDRRAULCOLOMBRES76.png" /></td><td>ESC. DR. RAUL COLOMBRES</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDRRICARDOGUTIERREZ77.png" /></td><td>ESC. DR. RICARDO GUTIERREZ</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDRSALUSTIANOZAVALIA78.png" /></td><td>ESC. DR. SALUSTIANO ZAVALIA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCEJERCITOARGENTINO79.png" /></td><td>ESC. EJERCITO ARGENTINO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCELMINAPAZDEGALLO80.png" /></td><td>ESC. ELMINA PAZ DE GALLO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCESPALPIINTSECJOVENESYADULTOSCONDISC81.png" /></td><td>ESC. ESP. A.L.P.I. (INT. SEC. JOVENES Y ADULTOS CON DISC.)</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCESPMAGDALENALAGARRIGUEINTSECJOVYADULTCON82.png" /></td><td>ESC. ESP. MAGDALENA LAGARRIGUE (INT. SEC. JOV. Y ADULT. CON </td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCESPECIALELSARUGGERIDEFABIO83.png" /></td><td>ESC. ESPECIAL - ELSA RUGGERI DE FABIO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCESPECIALALPI84.png" /></td><td>ESC. ESPECIAL ALPI</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCESPECIALDESORDOSPROSPEROGARCIA85.png" /></td><td>ESC. ESPECIAL DE SORDOS PROSPERO GARCIA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCESPECIALLUISBRAILLE86.png" /></td><td>ESC. ESPECIAL LUIS BRAILLE</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCESPECIALN395ELSARUGGERIDEFABIO87.png" /></td><td>ESC. ESPECIAL N� 395 - ELSA RUGGERI DE FABIO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCGOBERNADORMIGUELCRITTO88.png" /></td><td>ESC. GOBERNADOR MIGUEL CRITTO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCGUILLERMOGRIET89.png" /></td><td>ESC. GUILLERMO GRIET</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCINFANTILALBERTOGARCIAHAMILTON90.png" /></td><td>ESC. INFANTIL ALBERTO GARCIA HAMILTON</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCINFANTILPROFSOLEDADARDILESGRAYDESTEIN91.png" /></td><td>ESC. INFANTIL PROF. SOLEDAD ARDILES GRAY DE STEIN</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCJUSTINIANOFRIAS92.png" /></td><td>ESC. JUSTINIANO FRIAS</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCLOLAMORA93.png" /></td><td>ESC. LOLA MORA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCLUCASALEJANDROCORDOBA94.png" /></td><td>ESC. LUCAS ALEJANDRO CORDOBA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCMADREDELAPATRIAMARIAREMEDIOSDELVALLE95.png" /></td><td>ESC. MADRE DE LA PATRIA - MARIA REMEDIOS DEL VALLE</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCMARTINMIGUELDEGUEMES96.png" /></td><td>ESC. MARTIN MIGUEL DE GUEMES</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCMEDIAPRESIDENTEJUANDOMINGOPERON97.png" /></td><td>ESC. MEDIA PRESIDENTE JUAN DOMINGO PERON</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCMEDIAVIRGENDELAMERCED98.png" /></td><td>ESC. MEDIA VIRGEN DE LA MERCED</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCMONSEORBLASVICTORIOCONRERO99.png" /></td><td>ESC. MONSE�OR BLAS VICTORIO CONRERO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCMUTUALPOLICIAL100.png" /></td><td>ESC. MUTUAL POLICIAL</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCNOCTURNACIUDADELA101.png" /></td><td>ESC. NOCTURNA CIUDADELA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCNOCTURNADRALEJANDROHEREDIA102.png" /></td><td>ESC. NOCTURNA DR. ALEJANDRO HEREDIA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCNOCTURNAJOSEMARTI103.png" /></td><td>ESC. NOCTURNA JOSE MARTI</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCNOCTURNASILVANOBORES104.png" /></td><td>ESC. NOCTURNA SILVANO BORES</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCNUESTRASRADELROSARIODENUEVAPOMPEYAEXESCDEL105.png" /></td><td>ESC. NUESTRA SRA. DEL ROSARIO DE NUEVA POMPEYA-(EX. ESC. DEL</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCNUEVABARRIOCRUCEROBELGRANO106.png" /></td><td>ESC. NUEVA BARRIO CRUCERO BELGRANO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCNUEVAESPERANZA107.png" /></td><td>ESC. NUEVA ESPERANZA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCN161ISABELLACATOLICA108.png" /></td><td>ESC. N� 161 - ISABEL LA CATOLICA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCN240MANUELLAINEZ109.png" /></td><td>ESC. N� 240 - MANUEL LAINEZ</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCN247DRPANTALEONFERNANDEZ110.png" /></td><td>ESC. N� 247 - DR. PANTALEON FERNANDEZ</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCN248JUANLUISNOUGUES111.png" /></td><td>ESC. N� 248 - JUAN LUIS NOUGUES</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCN249MARCOAVELLANEDA112.png" /></td><td>ESC. N� 249 - MARCO AVELLANEDA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCN253ESTADODEISRAEL113.png" /></td><td>ESC. N� 253 "ESTADO DE ISRAEL"</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCN259GENERALMANUELBELGRANO114.png" /></td><td>ESC. N� 259 - GENERAL MANUEL BELGRANO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCN301CAPITALFEDERAL115.png" /></td><td>ESC. N� 301 - CAPITAL FEDERAL</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCN372CAMPODELASCARRERAS116.png" /></td><td>ESC. N� 372 - CAMPO DE LAS CARRERAS</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCN49JUANBAUTISTAALBERDI117.png" /></td><td>ESC. N� 49 - JUAN BAUTISTA ALBERDI</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCPARALAVIDA118.png" /></td><td>ESC. PARA LA VIDA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCPATRICIASARGENTINAS119.png" /></td><td>ESC. PATRICIAS ARGENTINAS</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCPAULGROUSSAC120.png" /></td><td>ESC. PAUL GROUSSAC</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCPERIODISMOARGENTINO121.png" /></td><td>ESC. PERIODISMO ARGENTINO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCPRESIDENTENICOLASAVELLANEDA122.png" /></td><td>ESC. PRESIDENTE NICOLAS AVELLANEDA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCPRIMARIAMANANTIALESSUR123.png" /></td><td>ESC. PRIMARIA MANANTIALES SUR</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCPROFESORALFREDOCOSSON124.png" /></td><td>ESC. PROFESOR ALFREDO COSSON</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCPTEJULIOARGENTINOROCA125.png" /></td><td>ESC. PTE. JULIO ARGENTINO ROCA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCRECTORBENJAMINVILLAFAE126.png" /></td><td>ESC. RECTOR BENJAMIN VILLAFA�E</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCREPUBLICADELPARAGUAY127.png" /></td><td>ESC. REPUBLICA DEL PARAGUAY</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSECRAULSCALABRINIORTIZ128.png" /></td><td>ESC. SEC. RAUL SCALABRINI ORTIZ</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSECUNDARIAAMADONICOMEDESJURI129.png" /></td><td>ESC. SECUNDARIA AMADO NICOMEDES JURI</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSECUNDARIABENJAMINMATIENZO130.png" /></td><td>ESC. SECUNDARIA BENJAMIN MATIENZO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSECUNDARIABERNABEARAOZ131.png" /></td><td>ESC. SECUNDARIA BERNABE ARAOZ</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSECUNDARIABLASPARERA132.png" /></td><td>ESC. SECUNDARIA BLAS PARERA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSECUNDARIABSANMIGUEL133.png" /></td><td>ESC. SECUNDARIA B� SAN MIGUEL</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSECUNDARIABSUTIAGA134.png" /></td><td>ESC. SECUNDARIA B� SUTIAGA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSECUNDARIACAPITANDELOSANDES135.png" /></td><td>ESC. SECUNDARIA CAPITAN DE LOS ANDES</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSECUNDARIACOSTANERA136.png" /></td><td>ESC. SECUNDARIA COSTANERA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSECUNDARIACRUCEROBELGRANO137.png" /></td><td>ESC. SECUNDARIA CRUCERO BELGRANO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSECUNDARIADECOMERCIOILDEFONSODELASMUECAS138.png" /></td><td>ESC. SECUNDARIA DE COMERCIO ILDEFONSO DE LAS MU�ECAS</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSECUNDARIADEVILLAAMALIA139.png" /></td><td>ESC. SECUNDARIA DE VILLA AMALIA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSECUNDARIADRRAMNADRIANARAUJO140.png" /></td><td>ESC. SECUNDARIA DR. RAM�N ADRIAN ARAUJO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSECUNDARIAELSALVADOR141.png" /></td><td>ESC. SECUNDARIA EL SALVADOR</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSECUNDARIAJUANLUISNOUGUES142.png" /></td><td>ESC. SECUNDARIA JUAN LUIS NOUGUES </td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSECUNDARIAMAESTROARANCIBIA143.png" /></td><td>ESC. SECUNDARIA MAESTRO ARANCIBIA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSECUNDARIAMARINAALFARO144.png" /></td><td>ESC. SECUNDARIA MARINA ALFARO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSECUNDARIAMARTINMIGUELDEGUEMES145.png" /></td><td>ESC. SECUNDARIA MARTIN MIGUEL DE GUEMES</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSECUNDARIAPANTALEONFERNANDEZ146.png" /></td><td>ESC. SECUNDARIA PANTALEON FERNANDEZ</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSECUNDARIARICARDOGUTIERREZ147.png" /></td><td>ESC. SECUNDARIA RICARDO GUTIERREZ</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSILVANOBORES148.png" /></td><td>ESC. SILVANO BORES</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSOBERANIANACIONAL149.png" /></td><td>ESC. SOBERANIA NACIONAL</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSUSANTIDADJUANPABLOII150.png" /></td><td>ESC. SU SANTIDAD JUAN PABLO II</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSUPERIORDEEDUCACIONARTISTICAESEA151.png" /></td><td>ESC. SUPERIOR DE EDUCACION ARTISTICA (E.S.E.A.)</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCTECNICAJUANXXIII152.png" /></td><td>ESC. TECNICA JUAN XXIII</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCTECNICAN3DRJUANBTERAN153.png" /></td><td>ESC. TECNICA N� 3 DR. JUAN B. TERAN</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCTECNICAN5154.png" /></td><td>ESC. TECNICA N� 5</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCTENIENTEBENJAMINMATIENZO155.png" /></td><td>ESC. TENIENTE BENJAMIN MATIENZO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCZENONJOSESANTILLAN156.png" /></td><td>ESC. ZENON JOSE SANTILLAN</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCDENIVELINICIALPARALAVIDA157.png" /></td><td>ESC.DE NIVEL INICIAL PARA LA VIDA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSECUNDARIABVICTORIA158.png" /></td><td>ESC.SECUNDARIA B� VICTORIA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSECUNDARIACAMPODELASCARRERAS159.png" /></td><td>ESC.SECUNDARIA CAMPO DE LAS CARRERAS</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSECUNDARIAEMILIOCASTELAR160.png" /></td><td>ESC.SECUNDARIA EMILIO CASTELAR</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCSECUNDARIARURALMEDIADAPORTICSEDECENTRAL161.png" /></td><td>ESC.SECUNDARIA RURAL MEDIADA POR TIC -SEDE CENTRAL</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCUELADENIVELINICIALCOSTANERANORTE162.png" /></td><td>ESCUELA DE NIVEL INICIAL COSTANERA NORTE</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCUELADETODOS163.png" /></td><td>ESCUELA DE TODOS</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCUELAESPECIALMAGDALENALAGARRIGUE164.png" /></td><td>ESCUELA ESPECIAL MAGDALENA LAGARRIGUE</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCUELAMEDIABSANALBERTO165.png" /></td><td>ESCUELA MEDIA B� SAN ALBERTO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCUELAMEDIADELBARRIOLOLAMORA166.png" /></td><td>ESCUELA MEDIA DEL BARRIO LOLA MORA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCUELANUEVABARRIOSANMIGUEL167.png" /></td><td>ESCUELA NUEVA BARRIO SAN MIGUEL</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCUELASECBARRIOSANRAMON168.png" /></td><td>ESCUELA SEC. BARRIO SAN RAMON</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCUELASECUNDARIACAMPONORTE169.png" /></td><td>ESCUELA SECUNDARIA CAMPO NORTE</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCUELASECUNDARIACONGRESODETUCUMAN170.png" /></td><td>ESCUELA SECUNDARIA CONGRESO DE TUCUMAN</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCUELASECUNDARIADELACIUDADELA171.png" /></td><td>ESCUELA SECUNDARIA DE LA CIUDADELA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCUELASECUNDARIADRLEANDRONALEM172.png" /></td><td>ESCUELA SECUNDARIA DR. LEANDRO N. ALEM</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCUELASECUNDARIAJUANLARREA173.png" /></td><td>ESCUELA SECUNDARIA JUAN LARREA</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_ESCUELASECUNDARIAMANUELARROYOYPINEDO174.png" /></td><td>ESCUELA SECUNDARIA MANUEL ARROYO Y PINEDO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_IESDRMIGUELCAMPERO175.png" /></td><td>I.E.S. DR. MIGUEL CAMPERO</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_INSTDEENSEANZASUPERIORPROFMANUELMARCHETTI176.png" /></td><td>INST. DE ENSE�ANZA SUPERIOR PROF. MANUEL MARCHETTI</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_INSTITUTOSUPERIORDEEDUCACIONTECNOLOGICAISET177.png" /></td><td>INSTITUTO SUPERIOR DE EDUCACION TECNOLOGICA (I.S.E.T.)</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_LICEOREMEDIOSDEESCALADADESANMARTIN178.png" /></td><td>LICEO REMEDIOS DE ESCALADA DE SAN MARTIN</td></tr><tr><td style="text-align: center;"><img src="legend/LISTADOCESPED181CUECON118CUI_2_179.png" /></td><td></td></tr></table>': cluster_LISTADOCESPED181CUECON118CUI_2,'Circuitos Electorales - Capital<br /><table><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_00010.png" /></td><td>0001</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0001A1.png" /></td><td>0001A</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_00022.png" /></td><td>0002</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0002A3.png" /></td><td>0002A</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_00034.png" /></td><td>0003</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_00045.png" /></td><td>0004</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_00056.png" /></td><td>0005</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_00067.png" /></td><td>0006</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_00078.png" /></td><td>0007</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0007A9.png" /></td><td>0007A</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_000810.png" /></td><td>0008</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0008A11.png" /></td><td>0008A</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_000912.png" /></td><td>0009</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0009A13.png" /></td><td>0009A</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_001014.png" /></td><td>0010</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0010A15.png" /></td><td>0010A</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_001116.png" /></td><td>0011</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0011A17.png" /></td><td>0011A</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_001218.png" /></td><td>0012</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0012A19.png" /></td><td>0012A</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_001320.png" /></td><td>0013</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0013A21.png" /></td><td>0013A</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_001422.png" /></td><td>0014</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0014A23.png" /></td><td>0014A</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0014B24.png" /></td><td>0014B</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0014C25.png" /></td><td>0014C</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0014D26.png" /></td><td>0014D</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_001527.png" /></td><td>0015</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0015A28.png" /></td><td>0015A</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0015B29.png" /></td><td>0015B</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_001630.png" /></td><td>0016</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0016A31.png" /></td><td>0016A</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_001732.png" /></td><td>0017</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0017A33.png" /></td><td>0017A</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_001834.png" /></td><td>0018</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0018A35.png" /></td><td>0018A</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0018B36.png" /></td><td>0018B</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0018C37.png" /></td><td>0018C</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0018D38.png" /></td><td>0018D</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0018E39.png" /></td><td>0018E</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0018F40.png" /></td><td>0018F</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0018G41.png" /></td><td>0018G</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_001942.png" /></td><td>0019</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_0019A43.png" /></td><td>0019A</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_002044.png" /></td><td>0020</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_002145.png" /></td><td>0021</td></tr><tr><td style="text-align: center;"><img src="legend/CircuitosElectoralesCapital_1_002246.png" /></td><td>0022</td></tr></table>': layer_CircuitosElectoralesCapital_1,"Google Hibrid": layer_GoogleHibrid_0,}).addTo(map);
+        setBounds();
+        var i = 0;
+        layer_LISTADOCESPED181CUECON118CUI_2.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['ESTABLECIMIENTO'] !== null?String('<div style="color: #eaebde; font-size: 10pt; font-weight: bold; font-family: \'Nirmala UI\', sans-serif;">' + layer.feature.properties['ESTABLECIMIENTO']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_LISTADOCESPED181CUECON118CUI_2'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        resetLabels([layer_LISTADOCESPED181CUECON118CUI_2]);
+        map.on("zoomend", function(){
+            resetLabels([layer_LISTADOCESPED181CUECON118CUI_2]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_LISTADOCESPED181CUECON118CUI_2]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_LISTADOCESPED181CUECON118CUI_2]);
+        });
+        </script>
+    </body>
+</html>
